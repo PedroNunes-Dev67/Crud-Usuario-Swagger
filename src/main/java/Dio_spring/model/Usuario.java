@@ -1,52 +1,58 @@
 package Dio_spring.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-public class Usuario {
+import java.io.Serializable;
 
-    @JsonIgnore
-    private Integer id;
-    private String login;
-    private String password;
+@Entity
+public class Usuario implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
+    private Long id;
+    private String nome;
+    private String email;
+    private String senha;
 
     public Usuario() {
     }
 
-    public Usuario(String login, String password) {
-        this.login = login;
-        this.password = password;
+    public Usuario(String nome, String email, String password) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = password;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id= " + id +
-                ", login= '" + login + '\'' +
-                ", password= '" + password + '\'' +
-                '}';
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
