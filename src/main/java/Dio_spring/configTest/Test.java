@@ -18,5 +18,9 @@ public class Test implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         usuarioRepository.save(new Usuario("Pedro","pedro@gmail.com","1234"));
+        usuarioRepository.save(new Usuario("Henrique","henriqueggplays@gmail.com","1234"));
+        usuarioRepository.save(new Usuario("Thiago","thiago@gmail.com","1234"));
+        usuarioRepository.save(new Usuario("Raul","raul@gmail.com","1234"));
+        usuarioRepository.save(new Usuario("Mycael","mycael@gmail.com","1234"));
     }
 }

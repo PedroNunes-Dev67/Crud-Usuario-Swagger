@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 
-public class UsuarioDto implements Serializable {
+public class UsuarioDtoRequest implements Serializable {
 
     @NotBlank
     private String nome;
