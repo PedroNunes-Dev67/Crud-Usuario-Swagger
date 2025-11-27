@@ -1,6 +1,7 @@
 package Dio_spring.controller;
 
 
+import Dio_spring.dto.RedefinirSenha;
 import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
 import Dio_spring.model.Usuario;
@@ -48,6 +49,11 @@ public class UsuarioController {
 
     private URI currentUri(Object id){
         return ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioDtoResponse> updateUser(@PathVariable("id") Long id, @RequestBody RedefinirSenha senha){
+        return ResponseEntity.ok(usuarioService.updateUser(id,senha));
     }
 
 }

@@ -1,5 +1,6 @@
 package Dio_spring.service;
 
+import Dio_spring.dto.RedefinirSenha;
 import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
 import Dio_spring.model.Usuario;
@@ -51,5 +52,22 @@ public class UsuarioService {
                 novoUsuario.getEmail()
         );
         return usuarioDtoResponse;
+    }
+
+    public UsuarioDtoResponse updateUser(Long id, RedefinirSenha novaSenha){
+
+        return usuarioRepository.findById(id)
+                .filter(user -> !user.getSenha().equals(novaSenha.getSenha()))
+                .map(user -> {
+
+                    user.setSenha(novaSenha.getSenha());
+                    usuarioRepository.save(user);
+                    UsuarioDtoResponse usuarioDtoResponse = new UsuarioDtoResponse(
+                            user.getId(),
+                            user.getNome(),
+                            user.getEmail()
+                    );
+                    return usuarioDtoResponse;
+                }).orElseThrow(() -> new RuntimeException());
     }
 }
