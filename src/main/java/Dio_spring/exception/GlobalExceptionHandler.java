@@ -40,17 +40,4 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(status).body(exceptionResponse);
     }
-
-    @ExceptionHandler(ExceptionEmptyUsuario.class)
-    public ResponseEntity<ExceptionResponse> exceptionResposne(ExceptionEmptyUsuario e, HttpServletRequest request){
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        ExceptionResponse exceptionResponse = new ExceptionResponse(
-                Instant.now(),
-                status.value(),
-                error,
-                e.getMessage(),
-                request.getRequestURI()
-        );
-        return ResponseEntity.status(status).body(exceptionResponse);
-    }
 }
