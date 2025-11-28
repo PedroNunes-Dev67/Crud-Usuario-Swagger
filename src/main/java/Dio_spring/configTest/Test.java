@@ -22,5 +22,6 @@ public class Test implements CommandLineRunner {
         usuarioRepository.save(new Usuario("Thiago","thiago@gmail.com","1234"));
         usuarioRepository.save(new Usuario("Raul","raul@gmail.com","1234"));
         usuarioRepository.save(new Usuario("Mycael","mycael@gmail.com","1234"));
+        usuarioRepository.save(new Usuario("Matheus lindo","matheus@gmail.com","1234"));
     }
 }

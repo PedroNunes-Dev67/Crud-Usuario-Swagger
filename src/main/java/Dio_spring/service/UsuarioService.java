@@ -3,6 +3,9 @@ package Dio_spring.service;
 import Dio_spring.dto.RedefinirSenha;
 import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
+import Dio_spring.exception.ExceptionConflitoUsuario;
+import Dio_spring.exception.ExceptionEmptyUsuario;
+import Dio_spring.exception.ExceptionUsuarioNaoEncontrado;
 import Dio_spring.model.Usuario;
 import Dio_spring.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +21,27 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public Usuario getUser(Long id){
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        return usuario.get();
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuário não encontrado."));
+        return usuario;
     }
 
     public List<Usuario> findAll(){
-        return usuarioRepository.findAll();
+        List<Usuario> list = usuarioRepository.findAll();
+        if (list.isEmpty()){
+            throw new ExceptionEmptyUsuario("Nenhum usuário cadastrado.");
+        }
+        return list;
     }
 
-    public Usuario delete(Long id){
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        usuarioRepository.delete(usuario.get());
-        return usuario.get();
+    public void delete(Long id){
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuario não encontrado."));
+        usuarioRepository.delete(usuario);
     }
 
     public UsuarioDtoResponse addUser(UsuarioDtoRequest usuarioDtoRequest){
 
         if (usuarioRepository.findByEmail(usuarioDtoRequest.getEmail()).isPresent()){
-            throw new RuntimeException("Error!");
+            throw new ExceptionConflitoUsuario("Usuario já cadastrado.");
         }
 
         Usuario novoUsuario = new Usuario(
@@ -46,12 +52,11 @@ public class UsuarioService {
 
         usuarioRepository.save(novoUsuario);
 
-        UsuarioDtoResponse usuarioDtoResponse = new UsuarioDtoResponse(
+        return new UsuarioDtoResponse(
                 novoUsuario.getId(),
                 novoUsuario.getNome(),
                 novoUsuario.getEmail()
         );
-        return usuarioDtoResponse;
     }
 
     public UsuarioDtoResponse updateUser(Long id, RedefinirSenha novaSenha){
@@ -68,6 +73,6 @@ public class UsuarioService {
                             user.getEmail()
                     );
                     return usuarioDtoResponse;
-                }).orElseThrow(() -> new RuntimeException());
+                }).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuário não encontrado ou senha não pode ser a mesma que a anterior."));
     }
 }

@@ -6,7 +6,9 @@ import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
 import Dio_spring.model.Usuario;
 import Dio_spring.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,13 +36,13 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> delete(@PathVariable("id") Long id){
-        Usuario usuario = usuarioService.delete(id);
-        return ResponseEntity.ok(usuario);
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+        usuarioService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDtoResponse> addUser(@RequestBody UsuarioDtoRequest usuarioDtoRequest){
+    public ResponseEntity<UsuarioDtoResponse> addUser(@RequestBody @Valid UsuarioDtoRequest usuarioDtoRequest){
 
         UsuarioDtoResponse usuarioDtoResponse = usuarioService.addUser(usuarioDtoRequest);
 
@@ -52,7 +54,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDtoResponse> updateUser(@PathVariable("id") Long id, @RequestBody RedefinirSenha senha){
+    public ResponseEntity<UsuarioDtoResponse> updateUser(@PathVariable("id") Long id,@RequestBody @Valid RedefinirSenha senha){
         return ResponseEntity.ok(usuarioService.updateUser(id,senha));
     }
 
