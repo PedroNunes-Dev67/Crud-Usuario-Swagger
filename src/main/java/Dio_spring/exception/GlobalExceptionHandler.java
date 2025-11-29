@@ -5,6 +5,7 @@ import Dio_spring.exception.model.ExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -31,6 +32,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ExceptionConflitoUsuario.class)
     public ResponseEntity<ExceptionResponse> exceptionResposne(ExceptionConflitoUsuario e, HttpServletRequest request){
         HttpStatus status = HttpStatus.CONFLICT;
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                Instant.now(),
+                status.value(),
+                error,
+                e.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(exceptionResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponse> exceptionResposne(MethodArgumentNotValidException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 Instant.now(),
                 status.value(),

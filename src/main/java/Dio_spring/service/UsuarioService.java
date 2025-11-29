@@ -10,6 +10,7 @@ import Dio_spring.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,8 +29,15 @@ public class UsuarioService {
         }).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuário não encontrado"));
     }
 
-    public List<Usuario> findAll(){
-        return usuarioRepository.findAll();
+    public List<UsuarioDtoResponse> findAll(){
+
+        List<UsuarioDtoResponse> listResponse = new ArrayList<>();
+        usuarioRepository.findAll().forEach(usuario -> {
+            listResponse.add(new UsuarioDtoResponse(usuario.getId(),
+                    usuario.getNome(),
+                    usuario.getEmail()));
+        });
+        return listResponse;
     }
 
     public void delete(Long id){

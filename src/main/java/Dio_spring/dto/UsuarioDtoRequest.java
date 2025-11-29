@@ -1,5 +1,6 @@
 package Dio_spring.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -8,10 +9,13 @@ import java.io.Serializable;
 public class UsuarioDtoRequest implements Serializable {
 
     @NotBlank
+    @Schema(example = "pedro")
     private String nome;
+    @Schema(example = "pedro@gmail.com")
     @Email
     @NotBlank
     private String email;
+    @Schema(example = "1234")
     @NotBlank
     private String senha;
 

@@ -4,9 +4,13 @@ package Dio_spring.controller;
 import Dio_spring.dto.RedefinirSenha;
 import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
-import Dio_spring.model.Usuario;
+import Dio_spring.exception.model.ExceptionResponse;
 import Dio_spring.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,36 +34,64 @@ public class UsuarioController {
 
     @Operation(summary = "Busca os dados do usuários por id", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado",
+                            content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UsuarioDtoResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
+                            content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ExceptionResponse.class),
+                                    examples = @ExampleObject(
+                                    name = "O usuário com o id passado não existe",
+                                    summary = "Usuário não encontrado",
+                                    value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
+                                            " \"status\": 404," +
+                                            " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
+                                            " \"message\": \"usuário não encontrado\"," +
+                                            " \"path\": \"/usuarios/17\"}"
+                                    )))
     })
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDtoResponse> getUser(@PathVariable("id") Long id){
+    public ResponseEntity<UsuarioDtoResponse> getUser(
+            @Parameter(description = "Id do usuário", example = "1")
+            @PathVariable("id") Long id){
+
         return ResponseEntity.ok(usuarioService.getUser(id));
     }
 
 
-    @Operation(summary = "Busca lista de usuários cadastrados", method = "GET")
+    @Operation(summary = "Lista todos os usuários cadastrados", method = "GET")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuários encontrados"),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+            @ApiResponse(responseCode = "200", description = "Usuários encontrados",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UsuarioDtoResponse.class)))
     })
     @GetMapping
-    public ResponseEntity<List<Usuario>> findALl(){
-        List<Usuario> allUsers = usuarioService.findAll();
-        return ResponseEntity.ok(allUsers);
+    public ResponseEntity<List<UsuarioDtoResponse>> findAllUsers(){
+        return ResponseEntity.ok(usuarioService.findAll());
     }
 
 
     @Operation(summary = "Deleta os usuários pelo id", method = "DELETE")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Usuário encontrado e deletado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ExceptionResponse.class),
+                    examples = @ExampleObject(
+                            name = "O usuário com o id passado não existe",
+                            summary = "Usuário não encontrado",
+                            value = "{\"moment\":\"2025-11-11T11:34:11Z\"," +
+                                    "\"status\": 404," +
+                                    " \"error\":\"Erro! Não foi possível utilizar os serviços desta API.\"," +
+                                    " \"message\":\"Usuário não encontrado\"," +
+                                    " \"path\":\"usuarios/17\"}"
+                    )))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Void> deleteUser(
+            @Parameter(description = "id do usuário que vai ser deletado",example = "1")
+            @PathVariable("id") Long id){
+
         usuarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -67,13 +99,36 @@ public class UsuarioController {
 
     @Operation(summary = "Cadastra usuários", method = "POST")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário cadastrado"),
-            @ApiResponse(responseCode = "400", description = "Validation ativa, parâmetro incorreto"),
-            @ApiResponse(responseCode = "409", description = "Conflito , usuário já cadastrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+            @ApiResponse(responseCode = "201", description = "Usuário cadastrado", content = @Content(
+                    mediaType = "application/json", schema = @Schema(implementation = UsuarioDtoResponse.class)
+            )),
+            @ApiResponse(responseCode = "400", description = "Validation ativa, parâmetro incorreto",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ExceptionResponse.class),
+                    examples = @ExampleObject(
+                            name = "Algum parâmentro enviado não corresponde, ativando a validação do sistema",
+                            summary = "validação dos dados",
+                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
+                                    " \"status\": 400," +
+                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
+                                    " \"message\": \"Paramentrôs incorretos\"," +
+                                    " \"path\": \"/usuarios/\"}"
+                    ))),
+            @ApiResponse(responseCode = "409", description = "Conflito , usuário já cadastrado",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ExceptionResponse.class),
+                    examples = @ExampleObject(
+                            name = "O usuário enviado para ser cadastrado já existe no sistema",
+                            summary = "Usuário já cadastrado",
+                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
+                                    " \"status\": 409," +
+                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
+                                    " \"message\": \"Usuário já cadastrado\"," +
+                                    " \"path\": \"/usuarios/\"}"
+                    )))
     })
     @PostMapping
-    public ResponseEntity<UsuarioDtoResponse> addUser(@RequestBody @Valid UsuarioDtoRequest usuarioDtoRequest){
+    public ResponseEntity<UsuarioDtoResponse> createUser(@RequestBody @Valid UsuarioDtoRequest usuarioDtoRequest){
 
         UsuarioDtoResponse usuarioDtoResponse = usuarioService.addUser(usuarioDtoRequest);
 
@@ -87,14 +142,53 @@ public class UsuarioController {
 
     @Operation(summary = "Atualiza senha do usuário",method = "PUT")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
-            @ApiResponse(responseCode = "400", description = "Validation usado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-            @ApiResponse(responseCode = "409", description = "Conflito , usuário já cadastrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+            @ApiResponse(responseCode = "200", description = "Usuário atualizado",
+                        content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = UsuarioDtoResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Validation usado",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ExceptionResponse.class),
+                    examples = @ExampleObject(
+                            name = "Algum parâmentro enviado não corresponde, ativando a validação do sistema",
+                            summary = "Validação dos dados",
+                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
+                                    " \"status\": 400," +
+                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
+                                    " \"message\": \"Paramentrôs incorretos\"," +
+                                    " \"path\": \"/usuarios/\"}"
+                    ))),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ExceptionResponse.class),
+                    examples = @ExampleObject(
+                            name = "O usuário com o id passado não existe",
+                            summary = "O usuário com o id passado não existe",
+                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
+                                    " \"status\": 404," +
+                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
+                                    " \"message\": \"usuário não encontrado\"," +
+                                    " \"path\": \"/usuarios/17\"}"
+
+                    ))),
+            @ApiResponse(responseCode = "409", description = "Conflito , senha não pode ser a mesma que a anterior",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ExceptionResponse.class),
+                    examples = @ExampleObject(
+                            name = "A senha enviada para alteração é a mesma que á anterior",
+                            summary = "Usuário já cadastrado",
+                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
+                                    " \"status\": 409," +
+                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
+                                    " \"message\": \"Senha não pode ser a mesma que a anterior\"," +
+                                    " \"path\": \"/usuarios/\"}"
+                    )))
     })
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDtoResponse> updateUser(@PathVariable("id") Long id,@RequestBody @Valid RedefinirSenha senha){
+    public ResponseEntity<UsuarioDtoResponse> updateUserPassword(
+            @Parameter(description = "Id do usuário a ter a senha atualizada",example = "1")
+            @PathVariable("id") Long id,
+            @RequestBody @Valid RedefinirSenha senha){
+
         return ResponseEntity.ok(usuarioService.updateUser(id,senha));
     }
 }

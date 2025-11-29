@@ -1,5 +1,7 @@
 package Dio_spring.exception.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.Instant;
 
 public class ExceptionResponse {

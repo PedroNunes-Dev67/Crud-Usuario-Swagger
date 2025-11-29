@@ -1,11 +1,16 @@
 package Dio_spring.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 public class UsuarioDtoResponse implements Serializable {
 
+    @Schema(example = "1")
     private Long id;
+    @Schema(example = "pedro")
     private String nome;
+    @Schema(example = "pedro@gmail.com")
     private String email;
 
     public UsuarioDtoResponse() {
