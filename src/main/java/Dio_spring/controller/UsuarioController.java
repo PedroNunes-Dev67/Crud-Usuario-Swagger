@@ -9,7 +9,6 @@ import Dio_spring.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -39,16 +38,8 @@ public class UsuarioController {
                             schema = @Schema(implementation = UsuarioDtoResponse.class))),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
                             content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ExceptionResponse.class),
-                                    examples = @ExampleObject(
-                                    name = "O usuário com o id passado não existe",
-                                    summary = "Usuário não encontrado",
-                                    value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
-                                            " \"status\": 404," +
-                                            " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
-                                            " \"message\": \"usuário não encontrado\"," +
-                                            " \"path\": \"/usuarios/17\"}"
-                                    )))
+                            schema = @Schema(implementation = ExceptionResponse.class)
+                                    ))
     })
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDtoResponse> getUser(
@@ -76,16 +67,8 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Usuário encontrado e deletado"),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
                     content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ExceptionResponse.class),
-                    examples = @ExampleObject(
-                            name = "O usuário com o id passado não existe",
-                            summary = "Usuário não encontrado",
-                            value = "{\"moment\":\"2025-11-11T11:34:11Z\"," +
-                                    "\"status\": 404," +
-                                    " \"error\":\"Erro! Não foi possível utilizar os serviços desta API.\"," +
-                                    " \"message\":\"Usuário não encontrado\"," +
-                                    " \"path\":\"usuarios/17\"}"
-                    )))
+                    schema = @Schema(implementation = ExceptionResponse.class)
+                    ))
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(
@@ -104,28 +87,10 @@ public class UsuarioController {
             )),
             @ApiResponse(responseCode = "400", description = "Validation ativa, parâmetro incorreto",
                     content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ExceptionResponse.class),
-                    examples = @ExampleObject(
-                            name = "Algum parâmentro enviado não corresponde, ativando a validação do sistema",
-                            summary = "validação dos dados",
-                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
-                                    " \"status\": 400," +
-                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
-                                    " \"message\": \"Paramentrôs incorretos\"," +
-                                    " \"path\": \"/usuarios/\"}"
-                    ))),
+                    schema = @Schema(implementation = ExceptionResponse.class))),
             @ApiResponse(responseCode = "409", description = "Conflito , usuário já cadastrado",
                     content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ExceptionResponse.class),
-                    examples = @ExampleObject(
-                            name = "O usuário enviado para ser cadastrado já existe no sistema",
-                            summary = "Usuário já cadastrado",
-                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
-                                    " \"status\": 409," +
-                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
-                                    " \"message\": \"Usuário já cadastrado\"," +
-                                    " \"path\": \"/usuarios/\"}"
-                    )))
+                    schema = @Schema(implementation = ExceptionResponse.class)))
     })
     @PostMapping
     public ResponseEntity<UsuarioDtoResponse> createUser(@RequestBody @Valid UsuarioDtoRequest usuarioDtoRequest){
@@ -147,41 +112,13 @@ public class UsuarioController {
                         schema = @Schema(implementation = UsuarioDtoResponse.class))),
             @ApiResponse(responseCode = "400", description = "Validation usado",
                     content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ExceptionResponse.class),
-                    examples = @ExampleObject(
-                            name = "Algum parâmentro enviado não corresponde, ativando a validação do sistema",
-                            summary = "Validação dos dados",
-                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
-                                    " \"status\": 400," +
-                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
-                                    " \"message\": \"Paramentrôs incorretos\"," +
-                                    " \"path\": \"/usuarios/\"}"
-                    ))),
+                    schema = @Schema(implementation = ExceptionResponse.class))),
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
                     content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ExceptionResponse.class),
-                    examples = @ExampleObject(
-                            name = "O usuário com o id passado não existe",
-                            summary = "O usuário com o id passado não existe",
-                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
-                                    " \"status\": 404," +
-                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
-                                    " \"message\": \"usuário não encontrado\"," +
-                                    " \"path\": \"/usuarios/17\"}"
-
-                    ))),
+                    schema = @Schema(implementation = ExceptionResponse.class))),
             @ApiResponse(responseCode = "409", description = "Conflito , senha não pode ser a mesma que a anterior",
                     content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = ExceptionResponse.class),
-                    examples = @ExampleObject(
-                            name = "A senha enviada para alteração é a mesma que á anterior",
-                            summary = "Usuário já cadastrado",
-                            value = "{ \"moment\": \"2025-11-11T11:34:11Z\"," +
-                                    " \"status\": 409," +
-                                    " \"error\": \"Erro! Não foi possível utilizar os serviços desta API.\"," +
-                                    " \"message\": \"Senha não pode ser a mesma que a anterior\"," +
-                                    " \"path\": \"/usuarios/\"}"
-                    )))
+                    schema = @Schema(implementation = ExceptionResponse.class)))
     })
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDtoResponse> updateUserPassword(
