@@ -52,10 +52,10 @@ Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://
 ## 📸 Screenshots
 
 ### Swagger UI - Endpoints Disponíveis
-![Swagger UI](public/Captura de tela 2025-12-27 155052.png)
+![Swagger UI](public/swagger.png)
 
 ### Exemplo de Resposta
-![JSON Response](public/Captura de tela 2025-12-27 155113.png)
+![JSON Response](public/json.png)
 
 ---
 
