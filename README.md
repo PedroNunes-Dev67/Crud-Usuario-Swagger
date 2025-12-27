@@ -21,7 +21,7 @@ Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://
 - ✅ **Tratamento de Exceções** - Respostas HTTP padronizadas e mensagens de erro claras
 - ✅ **Documentação Interativa** - Swagger UI para testar endpoints facilmente
 - ✅ **Perfis de Ambiente** - Configurações separadas para desenvolvimento e produção
-- ✅ **Persistência em PostgreSQL** - Banco de dados relacional robusto
+- ✅ **Persistência em H2 Database** - Banco de dados para testes
 
 ---
 
@@ -34,7 +34,7 @@ Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://
 - **Hibernate** - ORM (Object-Relational Mapping)
 
 ### Banco de Dados
-- **PostgreSQL 15** - Banco de dados relacional
+- **H2 Database** - Banco de dados de teste relacional
 
 ### Documentação
 - **SpringDoc OpenAPI 3** - Geração automática de documentação
@@ -79,31 +79,7 @@ git clone https://github.com/PedroNunes-Dev67/Crud-Usuario-Swagger.git
 cd Crud-Usuario-Swagger
 ```
 
-### 2️⃣ Configure o banco de dados
-
-Crie um banco de dados PostgreSQL:
-
-```sql
-CREATE DATABASE crud_usuarios;
-```
-
-### 3️⃣ Configure as credenciais
-
-Edite o arquivo `src/main/resources/application.properties` (ou `application-dev.properties`):
-
-```properties
-# Configuração do Banco de Dados
-spring.datasource.url=jdbc:postgresql://localhost:5432/crud_usuarios
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-
-# JPA/Hibernate
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-```
-
-### 4️⃣ Execute a aplicação
+### 2️⃣ Execute a aplicação
 
 ```bash
 # Usando Maven
@@ -114,7 +90,7 @@ mvn clean package
 java -jar target/crud-usuario-swagger-0.0.1-SNAPSHOT.jar
 ```
 
-### 5️⃣ Acesse a documentação Swagger
+### 3️⃣ Acesse a documentação Swagger
 
 Abra seu navegador e acesse:
 
