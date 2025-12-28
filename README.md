@@ -111,16 +111,14 @@ http://localhost:8080/swagger-ui.html
 
 ## 📝 Exemplo de Requisição
 
-### POST `/api/usuarios` - Criar novo usuário
+### POST `/usuarios` - Criar novo usuário
 
 **Request Body:**
 ```json
 {
   "nome": "Pedro Nunes",
   "email": "pedro@example.com",
-  "cpf": "123.456.789-00",
-  "telefone": "(81) 99999-9999",
-  "senha": "SenhaSegura@123"
+  "senha":"1234"
 }
 ```
 
@@ -129,10 +127,7 @@ http://localhost:8080/swagger-ui.html
 {
   "id": 1,
   "nome": "Pedro Nunes",
-  "email": "pedro@example.com",
-  "cpf": "123.456.789-00",
-  "telefone": "(81) 99999-9999",
-  "dataCadastro": "2024-12-27T10:30:00"
+  "email": "pedro@example.com"
 }
 ```
 
@@ -144,11 +139,9 @@ A API possui validações robustas para garantir a qualidade dos dados:
 
 | Campo | Validações |
 |-------|------------|
-| **Nome** | Não pode ser vazio; Mínimo 3 caracteres; Máximo 100 caracteres |
+| **Nome** | Não pode ser vazio |
 | **Email** | Formato de email válido; Único no sistema |
-| **CPF** | Formato válido; Único no sistema |
-| **Telefone** | Formato brasileiro válido |
-| **Senha** | Mínimo 8 caracteres; Deve conter letra maiúscula, minúscula e número |
+| **Senha** | Não pode ser vazia |
 
 ---
 
@@ -162,17 +155,17 @@ A API retorna respostas HTTP padronizadas para diferentes cenários:
 | `201 Created` | Recurso criado com sucesso |
 | `400 Bad Request` | Dados de entrada inválidos |
 | `404 Not Found` | Recurso não encontrado |
-| `409 Conflict` | Conflito (ex: email/CPF já cadastrado) |
+| `409 Conflict` | Conflito (ex: email já cadastrado) |
 | `500 Internal Server Error` | Erro interno do servidor |
 
 **Exemplo de resposta de erro:**
 ```json
 {
-  "timestamp": "2024-12-27T10:30:00",
-  "status": 400,
-  "error": "Bad Request",
+  "moment": "2025-12-27T10:30:00Z",
+  "status": 404,
+  "error": "Conflict",
   "message": "Email já cadastrado no sistema",
-  "path": "/api/usuarios"
+  "path": "/usuarios"
 }
 ```
 
