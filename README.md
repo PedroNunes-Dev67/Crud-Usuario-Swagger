@@ -162,7 +162,7 @@ A API retorna respostas HTTP padronizadas para diferentes cenários:
 ```json
 {
   "moment": "2025-12-27T10:30:00Z",
-  "status": 404,
+  "status": 409,
   "error": "Conflict",
   "message": "Email já cadastrado no sistema",
   "path": "/usuarios"
