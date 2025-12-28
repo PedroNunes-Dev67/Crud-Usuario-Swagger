@@ -45,8 +45,6 @@ Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://
 
 ### Build & Deploy
 - **Maven** - Gerenciamento de dependências
-- **Spring Boot DevTools** - Hot reload durante desenvolvimento
-
 ---
 
 ## 📸 Screenshots
@@ -64,7 +62,6 @@ Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://
 Antes de começar, você vai precisar ter instalado em sua máquina:
 
 - [Java JDK 21+](https://www.oracle.com/java/technologies/downloads/)
-- [PostgreSQL 15+](https://www.postgresql.org/download/)
 - [Maven 3.8+](https://maven.apache.org/download.cgi)
 - [Git](https://git-scm.com/downloads)
 
