@@ -6,7 +6,7 @@
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI%203.0-85EA2D?style=for-the-badge&logo=swagger)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-> API REST completa para gerenciamento de usuários com validações robustas, tratamento de exceções e documentação interativa via Swagger/OpenAPI.
+> API REST completa para gerenciamento de usuários com validações robustas, tratamento de exceções, consumo de Api externa e documentação interativa via Swagger/OpenAPI.
 
 ---
 
