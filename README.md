@@ -6,13 +6,13 @@
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI%203.0-85EA2D?style=for-the-badge&logo=swagger)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
-> API REST completa para gerenciamento de usuários com validações robustas, tratamento de exceções e documentação interativa via Swagger/OpenAPI.
+> API REST completa para gerenciamento de usuários com validações robustas, tratamento de exceções, consumo de Api externa e documentação interativa via Swagger/OpenAPI.
 
 ---
 
 ## 📋 Sobre o Projeto
 
-Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://www.dio.me/), com o objetivo de criar um sistema profissional de CRUD de usuários aplicando as melhores práticas de desenvolvimento.
+Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://www.dio.me/), com o objetivo de criar um sistema profissional de CRUD de usuários aplicando as melhores práticas de desenvolvimento, consumindo a Api da Viacep, para pegar dados sobre determinado cep e relacionar ao usuário.
 
 ### ✨ Principais Características
 
@@ -22,7 +22,7 @@ Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://
 - ✅ **Documentação Interativa** - Swagger UI para testar endpoints facilmente
 - ✅ **Perfis de Ambiente** - Configurações separadas para desenvolvimento e produção
 - ✅ **Persistência em H2 Database** - Banco de dados para testes
-
+- ✅ **Consumo de Api externa com RestTemplate** - Classe para consumo de APis
 ---
 
 ## 🚀 Tecnologias Utilizadas
