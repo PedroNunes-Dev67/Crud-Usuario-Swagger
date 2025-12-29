@@ -118,7 +118,8 @@ http://localhost:8080/swagger-ui.html
 {
   "nome": "Pedro Nunes",
   "email": "pedro@example.com",
-  "senha":"1234"
+  "senha":"1234",
+  "cep":"01000000
 }
 ```
 
@@ -126,8 +127,23 @@ http://localhost:8080/swagger-ui.html
 ```json
 {
   "id": 1,
-  "nome": "Pedro Nunes",
-  "email": "pedro@example.com"
+  "nome": "pedro",
+  "email": "pedro@gmail.com",
+  "endereco": {
+    "cep": "01000000",
+    "logradouro": "Praça da Sé",
+    "complemento": "lado ímpar",
+    "unidade": "string",
+    "bairro": "Sé",
+    "localidade": "São Paulo",
+    "uf": "SP",
+    "estado": "São Paulo",
+    "regiao": "Sudeste",
+    "ibge": "3550308",
+    "gia": "1004",
+    "ddd": "11",
+    "siafi": "7107"
+  }
 }
 ```
 
@@ -163,7 +179,6 @@ A API retorna respostas HTTP padronizadas para diferentes cenários:
 {
   "moment": "2025-12-27T10:30:00Z",
   "status": 409,
-  "error": "Conflict",
   "message": "Email já cadastrado no sistema",
   "path": "/usuarios"
 }
@@ -187,9 +202,7 @@ O arquivo será gerado em: `target/crud-usuario-swagger-0.0.1-SNAPSHOT.jar`
 ## 🌱 Próximas Melhorias
 
 - [ ] Implementar autenticação JWT
-- [ ] Adicionar paginação nos endpoints de listagem
 - [ ] Criar testes unitários com JUnit e Mockito
-- [ ] Implementar soft delete (exclusão lógica)
 - [ ] Adicionar filtros de busca (por nome, email, etc)
 - [ ] Configurar Docker Compose
 - [ ] Deploy em produção (Railway/Render)
