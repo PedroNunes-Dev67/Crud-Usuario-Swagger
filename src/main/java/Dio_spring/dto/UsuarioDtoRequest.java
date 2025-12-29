@@ -18,6 +18,9 @@ public class UsuarioDtoRequest implements Serializable {
     @Schema(example = "1234")
     @NotBlank
     private String senha;
+    @NotBlank
+    @Schema(example = "01000000")
+    private String cep;
 
     public String getNome() {
         return nome;
@@ -41,5 +44,13 @@ public class UsuarioDtoRequest implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }

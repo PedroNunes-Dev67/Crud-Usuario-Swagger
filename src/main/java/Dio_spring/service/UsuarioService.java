@@ -3,12 +3,17 @@ package Dio_spring.service;
 import Dio_spring.dto.RedefinirSenha;
 import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
+import Dio_spring.exception.ExceptionApiViaCep;
 import Dio_spring.exception.ExceptionConflitoUsuario;
 import Dio_spring.exception.ExceptionUsuarioNaoEncontrado;
+import Dio_spring.model.Endereco;
 import Dio_spring.model.Usuario;
+import Dio_spring.repository.EnderecoRepository;
 import Dio_spring.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +23,18 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+    @Autowired
+    private RestTemplate restTemplate;
 
     public UsuarioDtoResponse getUser(Long id){
         return usuarioRepository.findById(id).map(usuario -> {
             return new UsuarioDtoResponse(
                     usuario.getId(),
                     usuario.getNome(),
-                    usuario.getEmail()
+                    usuario.getEmail(),
+                    usuario.getEndereco_usuario()
             );
         }).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuário não encontrado"));
     }
@@ -35,7 +45,10 @@ public class UsuarioService {
         usuarioRepository.findAll().forEach(usuario -> {
             listResponse.add(new UsuarioDtoResponse(usuario.getId(),
                     usuario.getNome(),
-                    usuario.getEmail()));
+                    usuario.getEmail(),
+                    usuario.getEndereco_usuario()
+            )
+            );
         });
         return listResponse;
     }
@@ -47,23 +60,36 @@ public class UsuarioService {
 
     public UsuarioDtoResponse addUser(UsuarioDtoRequest usuarioDtoRequest){
 
-        if (usuarioRepository.findByEmail(usuarioDtoRequest.getEmail()).isPresent()){
-            throw new ExceptionConflitoUsuario("Usuario já cadastrado.");
+        try {
+
+            if (usuarioRepository.findByEmail(usuarioDtoRequest.getEmail()).isPresent()){
+                throw new ExceptionConflitoUsuario("Usuario já cadastrado.");
+            }
+
+            Endereco endereco = enderecoRepository.findById(usuarioDtoRequest.getCep()).orElseGet(() -> {
+                Endereco novoEndereco = restTemplate.getForObject("https://viacep.com.br/ws/"+usuarioDtoRequest.getCep()+"/json/", Endereco.class);
+                return enderecoRepository.save(novoEndereco);
+            });
+
+            Usuario novoUsuario = new Usuario(
+                    usuarioDtoRequest.getNome(),
+                    usuarioDtoRequest.getEmail(),
+                    usuarioDtoRequest.getSenha(),
+                    endereco
+            );
+
+            usuarioRepository.save(novoUsuario);
+
+            return new UsuarioDtoResponse(
+                    novoUsuario.getId(),
+                    novoUsuario.getNome(),
+                    novoUsuario.getEmail(),
+                    novoUsuario.getEndereco_usuario()
+            );
         }
-
-        Usuario novoUsuario = new Usuario(
-                usuarioDtoRequest.getNome(),
-                usuarioDtoRequest.getEmail(),
-                usuarioDtoRequest.getSenha()
-        );
-
-        usuarioRepository.save(novoUsuario);
-
-        return new UsuarioDtoResponse(
-                novoUsuario.getId(),
-                novoUsuario.getNome(),
-                novoUsuario.getEmail()
-        );
+        catch (HttpClientErrorException e){
+            throw new ExceptionApiViaCep("Cep inválido");
+        }
     }
 
     public UsuarioDtoResponse updateUser(Long id, RedefinirSenha novaSenha){
@@ -79,7 +105,8 @@ public class UsuarioService {
             return new UsuarioDtoResponse(
                     usuario.getId(),
                     usuario.getNome(),
-                    usuario.getEmail()
+                    usuario.getEmail(),
+                    usuario.getEndereco_usuario()
             );
     }
 }

@@ -15,13 +15,18 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
 
+    @JoinColumn
+    @ManyToOne
+    private Endereco endereco_usuario;
+
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String senha) {
+    public Usuario(String nome, String email, String senha, Endereco endereco_usuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.endereco_usuario = endereco_usuario;
     }
 
     public Long getId() {
@@ -54,5 +59,13 @@ public class Usuario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Endereco getEndereco_usuario() {
+        return endereco_usuario;
+    }
+
+    public void setEndereco_usuario(Endereco endereco_usuario) {
+        this.endereco_usuario = endereco_usuario;
     }
 }

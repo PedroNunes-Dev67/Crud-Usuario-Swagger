@@ -1,5 +1,6 @@
 package Dio_spring.dto;
 
+import Dio_spring.model.Endereco;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
@@ -12,14 +13,16 @@ public class UsuarioDtoResponse implements Serializable {
     private String nome;
     @Schema(example = "pedro@gmail.com")
     private String email;
+    private Endereco endereco;
 
     public UsuarioDtoResponse() {
     }
 
-    public UsuarioDtoResponse(Long id, String nome, String email) {
+    public UsuarioDtoResponse(Long id, String nome, String email, Endereco endereco) {
         this.id = id;
         this.nome = nome;
         this.email = email;
+        this.endereco = endereco;
     }
 
     public Long getId() {
@@ -44,5 +47,13 @@ public class UsuarioDtoResponse implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }
