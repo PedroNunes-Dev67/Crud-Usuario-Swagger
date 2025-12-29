@@ -12,7 +12,7 @@
 
 ## 📋 Sobre o Projeto
 
-Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://www.dio.me/), com o objetivo de criar um sistema profissional de CRUD de usuários aplicando as melhores práticas de desenvolvimento.
+Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://www.dio.me/), com o objetivo de criar um sistema profissional de CRUD de usuários aplicando as melhores práticas de desenvolvimento, consumindo a Api da Viacep, para pegar dados sobre determinado cep e relacionar ao usuário.
 
 ### ✨ Principais Características
 
@@ -22,7 +22,7 @@ Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://
 - ✅ **Documentação Interativa** - Swagger UI para testar endpoints facilmente
 - ✅ **Perfis de Ambiente** - Configurações separadas para desenvolvimento e produção
 - ✅ **Persistência em H2 Database** - Banco de dados para testes
-
+- ✅ **Consumo de Api externa com RestTemplate** - Classe para consumo de APis
 ---
 
 ## 🚀 Tecnologias Utilizadas
