@@ -24,6 +24,13 @@ public class UsuarioDtoRequest implements Serializable {
     @Schema(example = "01001000")
     private String cep;
 
+    public UsuarioDtoRequest(String nome, String email, String senha, String cep) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.cep = cep;
+    }
+
     public String getNome() {
         return nome;
     }

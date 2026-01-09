@@ -95,7 +95,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<UsuarioDtoResponse> createUser(@RequestBody @Valid UsuarioDtoRequest usuarioDtoRequest){
 
-        UsuarioDtoResponse usuarioDtoResponse = usuarioService.addUser(usuarioDtoRequest);
+        UsuarioDtoResponse usuarioDtoResponse = usuarioService.addUsuario(usuarioDtoRequest);
 
         return ResponseEntity.created(currentUri(usuarioDtoResponse.getId())).body(usuarioDtoResponse);
     }
