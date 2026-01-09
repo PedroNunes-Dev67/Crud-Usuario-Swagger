@@ -56,8 +56,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(exceptionResponse);
     }
 
-    @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity<ExceptionResponse> exceptionResposne(HttpClientErrorException e, HttpServletRequest request) {
+    @ExceptionHandler(ExceptionApiViaCep.class)
+    public ResponseEntity<ExceptionResponse> exceptionResposne(ExceptionApiViaCep e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 Instant.now(),

@@ -60,15 +60,21 @@ public class UsuarioService {
 
     public UsuarioDtoResponse addUser(UsuarioDtoRequest usuarioDtoRequest){
 
-        try {
-
             if (usuarioRepository.findByEmail(usuarioDtoRequest.getEmail()).isPresent()){
                 throw new ExceptionConflitoUsuario("Usuario já cadastrado.");
             }
 
             Endereco endereco = enderecoRepository.findById(usuarioDtoRequest.getCep()).orElseGet(() -> {
-                Endereco novoEndereco = restTemplate.getForObject("https://viacep.com.br/ws/"+usuarioDtoRequest.getCep()+"/json/", Endereco.class);
-                return enderecoRepository.save(novoEndereco);
+
+                try {
+                    Endereco novoEndereco = restTemplate.getForObject("https://viacep.com.br/ws/" + usuarioDtoRequest.getCep() + "/json/", Endereco.class);
+
+                    return enderecoRepository.save(novoEndereco);
+                }
+                catch (Exception e){
+
+                    throw new ExceptionApiViaCep("Cep inválido");
+                }
             });
 
             Usuario novoUsuario = new Usuario(
@@ -87,10 +93,7 @@ public class UsuarioService {
                     novoUsuario.getEndereco_usuario()
             );
         }
-        catch (HttpClientErrorException e){
-            throw new ExceptionApiViaCep("Cep inválido");
-        }
-    }
+
 
     public UsuarioDtoResponse updateUser(Long id, RedefinirSenha novaSenha){
             Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuário não encontrado"));

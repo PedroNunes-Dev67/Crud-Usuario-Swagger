@@ -1,9 +1,11 @@
 package Dio_spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,7 @@ import java.util.Set;
 public class Endereco {
 
     @Id
-    @Schema(example = "01000000")
+    @Schema(example = "01001000")
     private String cep;
     @Schema(example = "Praça da Sé")
     private String logradouro;
@@ -38,6 +40,9 @@ public class Endereco {
     private String ddd;
     @Schema(example = "7107")
     private String siafi;
+    @Transient
+    @JsonIgnore
+    private boolean erro;
 
     @OneToMany(mappedBy = "endereco_usuario")
     private Set<Usuario> list = new HashSet<>();
@@ -163,5 +168,13 @@ public class Endereco {
 
     public void setSiafi(String siafi) {
         this.siafi = siafi;
+    }
+
+    public boolean isErro() {
+        return erro;
+    }
+
+    public void setErro(boolean error) {
+        this.erro = error;
     }
 }

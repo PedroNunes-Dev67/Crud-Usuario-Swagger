@@ -3,6 +3,7 @@ package Dio_spring.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
@@ -19,7 +20,8 @@ public class UsuarioDtoRequest implements Serializable {
     @NotBlank
     private String senha;
     @NotBlank
-    @Schema(example = "01000000")
+    @Length(min = 8, max = 8)
+    @Schema(example = "01001000")
     private String cep;
 
     public String getNome() {
