@@ -1,4 +1,4 @@
-package Dio_spring.model;
+package CRUD_usuarios.model;
 
 import jakarta.persistence.*;
 

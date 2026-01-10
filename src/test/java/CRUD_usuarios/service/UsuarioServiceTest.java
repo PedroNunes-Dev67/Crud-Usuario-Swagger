@@ -1,11 +1,10 @@
-package Dio_spring.service;
+package CRUD_usuarios.service;
 
-import Dio_spring.dto.UsuarioDtoRequest;
-import Dio_spring.dto.UsuarioDtoResponse;
-import Dio_spring.exception.ExceptionApiViaCep;
-import Dio_spring.model.Endereco;
-import Dio_spring.repository.UsuarioRepository;
-import Dio_spring.repository.UsuarioRepositoryTest;
+import CRUD_usuarios.dto.UsuarioDtoRequest;
+import CRUD_usuarios.dto.UsuarioDtoResponse;
+import CRUD_usuarios.exception.ExceptionApiViaCep;
+import CRUD_usuarios.model.Endereco;
+import CRUD_usuarios.repository.UsuarioRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,6 +1,6 @@
-package Dio_spring.repository;
+package CRUD_usuarios.repository;
 
-import Dio_spring.model.Usuario;
+import CRUD_usuarios.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

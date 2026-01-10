@@ -1,14 +1,13 @@
-package Dio_spring.exception;
+package CRUD_usuarios.exception;
 
 
-import Dio_spring.exception.model.ExceptionResponse;
+import CRUD_usuarios.exception.model.ExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.Instant;
 

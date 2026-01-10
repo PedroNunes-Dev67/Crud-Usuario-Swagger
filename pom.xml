@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>PedroNunesDev</groupId>
-	<artifactId>Dio-spring</artifactId>
+	<artifactId>CRUD-Usuarios</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Dio-spring</name>
-	<description>Projeto spring-dio</description>
+	<name>CRUD_Usuarios</name>
+	<description>Projeto de controle de endpoints com usuários, consumindo uma pai externa, documentado com OpenAPI/Swagger e testes com JUnit e Mockito</description>
 	<url/>
 	<licenses>
 		<license/>

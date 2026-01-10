@@ -1,13 +1,13 @@
-package Dio_spring.service;
+package CRUD_usuarios.service;
 
-import Dio_spring.dto.RedefinirSenhaDTO;
-import Dio_spring.dto.UsuarioDtoRequest;
-import Dio_spring.dto.UsuarioDtoResponse;
-import Dio_spring.exception.ExceptionConflitoUsuario;
-import Dio_spring.exception.ExceptionUsuarioNaoEncontrado;
-import Dio_spring.model.Endereco;
-import Dio_spring.model.Usuario;
-import Dio_spring.repository.UsuarioRepository;
+import CRUD_usuarios.dto.RedefinirSenhaDTO;
+import CRUD_usuarios.dto.UsuarioDtoRequest;
+import CRUD_usuarios.dto.UsuarioDtoResponse;
+import CRUD_usuarios.exception.ExceptionConflitoUsuario;
+import CRUD_usuarios.exception.ExceptionUsuarioNaoEncontrado;
+import CRUD_usuarios.model.Endereco;
+import CRUD_usuarios.model.Usuario;
+import CRUD_usuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

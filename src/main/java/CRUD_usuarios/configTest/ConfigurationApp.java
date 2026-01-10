@@ -1,4 +1,4 @@
-package Dio_spring.configTest;
+package CRUD_usuarios.configTest;
 
 
 import org.springframework.context.annotation.Bean;

@@ -1,13 +1,13 @@
-package Dio_spring;
+package CRUD_usuarios;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DioSpringApplication {
+public class Crud_UsuariosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DioSpringApplication.class, args);
+		SpringApplication.run(Crud_UsuariosApplication.class, args);
 	}
 
 }

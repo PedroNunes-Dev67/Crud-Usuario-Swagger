@@ -1,6 +1,6 @@
-package Dio_spring.dto;
+package CRUD_usuarios.dto;
 
-import Dio_spring.model.Endereco;
+import CRUD_usuarios.model.Endereco;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;

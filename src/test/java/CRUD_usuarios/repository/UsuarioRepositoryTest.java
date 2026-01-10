@@ -1,6 +1,6 @@
-package Dio_spring.repository;
+package CRUD_usuarios.repository;
 
-import Dio_spring.model.Usuario;
+import CRUD_usuarios.model.Usuario;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,10 +1,7 @@
-package Dio_spring.repository;
+package CRUD_usuarios.repository;
 
-import Dio_spring.model.Endereco;
-import Dio_spring.model.Usuario;
+import CRUD_usuarios.model.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 public interface EnderecoRepository extends JpaRepository<Endereco, String> {
 

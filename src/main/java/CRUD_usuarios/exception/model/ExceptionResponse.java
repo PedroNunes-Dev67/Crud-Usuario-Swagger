@@ -1,6 +1,4 @@
-package Dio_spring.exception.model;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+package CRUD_usuarios.exception.model;
 
 import java.time.Instant;
 

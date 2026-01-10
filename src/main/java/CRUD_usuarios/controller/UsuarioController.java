@@ -1,11 +1,11 @@
-package Dio_spring.controller;
+package CRUD_usuarios.controller;
 
 
-import Dio_spring.dto.RedefinirSenhaDTO;
-import Dio_spring.dto.UsuarioDtoRequest;
-import Dio_spring.dto.UsuarioDtoResponse;
-import Dio_spring.exception.model.ExceptionResponse;
-import Dio_spring.service.UsuarioService;
+import CRUD_usuarios.dto.RedefinirSenhaDTO;
+import CRUD_usuarios.dto.UsuarioDtoRequest;
+import CRUD_usuarios.dto.UsuarioDtoResponse;
+import CRUD_usuarios.exception.model.ExceptionResponse;
+import CRUD_usuarios.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

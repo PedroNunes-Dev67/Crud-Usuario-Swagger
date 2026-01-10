@@ -1,8 +1,8 @@
-package Dio_spring.service;
+package CRUD_usuarios.service;
 
-import Dio_spring.exception.ExceptionApiViaCep;
-import Dio_spring.model.Endereco;
-import Dio_spring.repository.EnderecoRepository;
+import CRUD_usuarios.exception.ExceptionApiViaCep;
+import CRUD_usuarios.model.Endereco;
+import CRUD_usuarios.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
