@@ -1,6 +1,6 @@
 package Dio_spring.service;
 
-import Dio_spring.dto.RedefinirSenha;
+import Dio_spring.dto.RedefinirSenhaDTO;
 import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
 import Dio_spring.exception.ExceptionConflitoUsuario;
@@ -10,6 +10,7 @@ import Dio_spring.model.Usuario;
 import Dio_spring.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,9 @@ public class UsuarioService {
     @Autowired
     private ApiViaCep apiViaCep;
 
+    @Transactional(readOnly = true)
     public UsuarioDtoResponse getUser(Long id){
+
         return usuarioRepository.findById(id).map(usuario -> {
             return new UsuarioDtoResponse(
                     usuario.getId(),
@@ -33,9 +36,11 @@ public class UsuarioService {
         }).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuário não encontrado"));
     }
 
+    @Transactional(readOnly = true)
     public List<UsuarioDtoResponse> findAll(){
 
         List<UsuarioDtoResponse> listResponse = new ArrayList<>();
+
         usuarioRepository.findAll().forEach(usuario -> {
             listResponse.add(new UsuarioDtoResponse(usuario.getId(),
                     usuario.getNome(),
@@ -47,16 +52,19 @@ public class UsuarioService {
         return listResponse;
     }
 
+    @Transactional
     public void delete(Long id){
+
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuario não encontrado."));
+
         usuarioRepository.delete(usuario);
     }
 
+    @Transactional
     public UsuarioDtoResponse addUsuario(UsuarioDtoRequest usuarioDtoRequest){
 
-            if (usuarioRepository.findByEmail(usuarioDtoRequest.getEmail()).isPresent()){
-                throw new ExceptionConflitoUsuario("Usuario já cadastrado.");
-            }
+            //Não deve salvar o mesmo usuário com mesmo email
+            if (usuarioRepository.findByEmail(usuarioDtoRequest.getEmail()).isPresent()) throw new ExceptionConflitoUsuario("Usuario já cadastrado.");
 
             Endereco endereco = apiViaCep.buscarDaddosDeUmCep(usuarioDtoRequest.getCep());
 
@@ -75,10 +83,11 @@ public class UsuarioService {
                     novoUsuario.getEmail(),
                     novoUsuario.getEndereco_usuario()
             );
-        }
+    }
 
+    @Transactional
+    public UsuarioDtoResponse updateUser(Long id, RedefinirSenhaDTO novaSenha){
 
-    public UsuarioDtoResponse updateUser(Long id, RedefinirSenha novaSenha){
             Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ExceptionUsuarioNaoEncontrado("Usuário não encontrado"));
 
             if (usuario.getSenha().equals(novaSenha.getSenha())){

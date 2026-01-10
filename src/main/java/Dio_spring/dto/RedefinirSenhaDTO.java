@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 
-public class RedefinirSenha implements Serializable {
+public class RedefinirSenhaDTO implements Serializable {
 
     @NotBlank
     @Schema(example = "java123")

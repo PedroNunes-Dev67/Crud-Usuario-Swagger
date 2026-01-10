@@ -5,6 +5,7 @@ import Dio_spring.model.Endereco;
 import Dio_spring.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -15,6 +16,7 @@ public class ApiViaCep {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Transactional
     public Endereco buscarDaddosDeUmCep(String cep){
 
         return enderecoRepository.findById(cep).orElseGet(() -> {

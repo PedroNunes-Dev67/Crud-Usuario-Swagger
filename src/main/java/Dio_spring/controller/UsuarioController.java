@@ -1,7 +1,7 @@
 package Dio_spring.controller;
 
 
-import Dio_spring.dto.RedefinirSenha;
+import Dio_spring.dto.RedefinirSenhaDTO;
 import Dio_spring.dto.UsuarioDtoRequest;
 import Dio_spring.dto.UsuarioDtoResponse;
 import Dio_spring.exception.model.ExceptionResponse;
@@ -46,7 +46,9 @@ public class UsuarioController {
             @Parameter(description = "Id do usuário", example = "1")
             @PathVariable("id") Long id){
 
-        return ResponseEntity.ok(usuarioService.getUser(id));
+        UsuarioDtoResponse usuario = usuarioService.getUser(id);
+
+        return ResponseEntity.ok(usuario);
     }
 
 
@@ -58,7 +60,10 @@ public class UsuarioController {
     })
     @GetMapping
     public ResponseEntity<List<UsuarioDtoResponse>> findAllUsers(){
-        return ResponseEntity.ok(usuarioService.findAll());
+
+        List<UsuarioDtoResponse> list = usuarioService.findAll();
+
+        return ResponseEntity.ok(list);
     }
 
 
@@ -124,8 +129,10 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDtoResponse> updateUserPassword(
             @Parameter(description = "Id do usuário a ter a senha atualizada",example = "1")
             @PathVariable("id") Long id,
-            @RequestBody @Valid RedefinirSenha senha){
+            @RequestBody @Valid RedefinirSenhaDTO senha){
 
-        return ResponseEntity.ok(usuarioService.updateUser(id,senha));
+        UsuarioDtoResponse usuario = usuarioService.updateUser(id, senha);
+
+        return ResponseEntity.ok(usuario);
     }
 }
