@@ -20,7 +20,7 @@ public class UsuarioDtoRequest implements Serializable {
     @NotBlank
     private String senha;
     @NotBlank
-    @Length(min = 8, max = 8)
+    @Length(min = 8, max = 8, message = "CEP deve conter até 8 caracteres")
     @Schema(example = "01001000")
     private String cep;
 

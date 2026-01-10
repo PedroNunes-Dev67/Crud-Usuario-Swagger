@@ -11,6 +11,10 @@ public class RedefinirSenhaDTO implements Serializable {
     @Schema(example = "java123")
     private String senha;
 
+    public RedefinirSenhaDTO(String senha) {
+        this.senha = senha;
+    }
+
     public String getSenha() {
         return senha;
     }

@@ -1,8 +1,10 @@
 package CRUD_usuarios.service;
 
+import CRUD_usuarios.dto.RedefinirSenhaDTO;
 import CRUD_usuarios.dto.UsuarioDtoRequest;
 import CRUD_usuarios.dto.UsuarioDtoResponse;
 import CRUD_usuarios.exception.ExceptionApiViaCep;
+import CRUD_usuarios.exception.ExceptionConflitoUsuario;
 import CRUD_usuarios.exception.ExceptionUsuarioNaoEncontrado;
 import CRUD_usuarios.model.Endereco;
 import CRUD_usuarios.model.Usuario;
@@ -81,5 +83,54 @@ public class UsuarioServiceTest {
         Mockito.when(usuarioRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
         Assertions.assertThrows(ExceptionUsuarioNaoEncontrado.class, () -> usuarioService.getUser(Long.parseLong("5")));
+    }
+
+    @Test
+    @DisplayName("Deve deletar usuário conforme id, se não encontrar usuario deve lançar exceção")
+    void deleteUsuarioTeste(){
+
+        Usuario usuario = new Usuario("pedro","pedro@gmail.com","1234",null);
+
+        Mockito.when(usuarioRepository.findById(Long.parseLong("1"))).thenReturn(Optional.of(usuario));
+
+        usuarioService.delete(Long.parseLong("1"));
+
+        Mockito.verify(usuarioRepository, Mockito.times(1)).delete(usuario);
+
+        Mockito.when(usuarioRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(ExceptionUsuarioNaoEncontrado.class, () -> usuarioService.delete(Long.parseLong("5")));
+    }
+
+    @Test
+    @DisplayName("Deve atualizar a senha do usuário quando encontrar pelo id e senha for diferente")
+    void updateUsuarioTestSucesso(){
+
+        Usuario usuario = new Usuario("pedro","pedro@gmail.com","1234",null);
+
+        Mockito.when(usuarioRepository.findById(Long.parseLong("1"))).thenReturn(Optional.of(usuario));
+
+        RedefinirSenhaDTO redefinirSenhaDTO = new RedefinirSenhaDTO("123456");
+
+        UsuarioDtoResponse usuarioDtoResponse = usuarioService.updateUser(Long.parseLong("1"), redefinirSenhaDTO);
+
+        Mockito.verify(usuarioRepository, Mockito.times(1)).save(usuario);
+
+        Assertions.assertEquals(usuario.getSenha(), redefinirSenhaDTO.getSenha());
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção quando a senha for igual a anterior")
+    void updateUsuarioTestFalha(){
+
+        Usuario usuario = new Usuario("pedro","pedro@gmail.com","1234",null);
+
+        Mockito.when(usuarioRepository.findById(Long.parseLong("1"))).thenReturn(Optional.of(usuario));
+
+        RedefinirSenhaDTO redefinirSenhaDTO = new RedefinirSenhaDTO("1234");
+
+        Assertions.assertThrows(ExceptionConflitoUsuario.class, () -> usuarioService.updateUser(Long.parseLong("1"), redefinirSenhaDTO));
+
+        Mockito.verify(usuarioRepository, Mockito.times(0)).save(usuario);
     }
 }
