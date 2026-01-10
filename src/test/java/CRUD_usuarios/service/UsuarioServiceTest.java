@@ -3,7 +3,9 @@ package CRUD_usuarios.service;
 import CRUD_usuarios.dto.UsuarioDtoRequest;
 import CRUD_usuarios.dto.UsuarioDtoResponse;
 import CRUD_usuarios.exception.ExceptionApiViaCep;
+import CRUD_usuarios.exception.ExceptionUsuarioNaoEncontrado;
 import CRUD_usuarios.model.Endereco;
+import CRUD_usuarios.model.Usuario;
 import CRUD_usuarios.repository.UsuarioRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
@@ -31,10 +33,6 @@ public class UsuarioServiceTest {
     @InjectMocks
     private UsuarioService usuarioService;
 
-    @Autowired
-    private EntityManager entityManager;
-
-
     @Test
     @DisplayName("Teste da API Via Cep do método de criar usuário Sucesso")
     void addUsuarioTestSucesso(){
@@ -55,7 +53,7 @@ public class UsuarioServiceTest {
     }
 
     @Test
-    @DisplayName("Teste de erro do método addUsuario")
+    @DisplayName("Deve lançar exceção quando CEP for inválido")
     void addUsuarioTestErro(){
 
         Mockito.when(apiViaCep.buscarDaddosDeUmCep("00000000")).thenThrow(ExceptionApiViaCep.class);
@@ -66,5 +64,22 @@ public class UsuarioServiceTest {
 
         Mockito.verify(usuarioRepository, Mockito.times(0)).save(ArgumentMatchers.any());
         Mockito.verify(usuarioRepository, Mockito.times(1)).findByEmail(ArgumentMatchers.any());
+    }
+
+    @Test
+    @DisplayName("Deve retornar dto do usuário quando id for válido e lançar exceção quando não existir usuário com id")
+    void getUsuarioSucesso(){
+
+        Usuario usuario = new Usuario("pedro","pedro@gmail.com","1234",null);
+
+        Mockito.when(usuarioRepository.findById(Long.parseLong("1"))).thenReturn(Optional.of(usuario));
+
+        UsuarioDtoResponse usuarioDtoResponse = usuarioService.getUser(Long.parseLong("1"));
+
+        Assertions.assertEquals(usuario.getId(),usuarioDtoResponse.getId());
+
+        Mockito.when(usuarioRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(ExceptionUsuarioNaoEncontrado.class, () -> usuarioService.getUser(Long.parseLong("5")));
     }
 }
