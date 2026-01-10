@@ -12,7 +12,7 @@
 
 ## 📋 Sobre o Projeto
 
-Esta API foi desenvolvida como parte de um bootcamp da plataforma [DIO](https://www.dio.me/), com o objetivo de criar um sistema profissional de CRUD de usuários aplicando as melhores práticas de desenvolvimento, consumindo a Api da Viacep, para pegar dados sobre determinado cep e relacionar ao usuário.
+Esta API foi desenvolvida com o objetivo de criar um sistema profissional de CRUD de usuários aplicando as melhores práticas de desenvolvimento, consumindo a Api da Viacep, para pegar dados sobre determinado cep e relacionar ao usuário.
 
 ### ✨ Principais Características
 
@@ -240,7 +240,6 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 🙏 Agradecimentos
 
-- [DIO](https://www.dio.me/) - Pela plataforma de ensino e pelo bootcamp
 - [Spring Framework](https://spring.io/) - Pela excelente documentação
 - [SpringDoc OpenAPI](https://springdoc.org/) - Pela facilidade de integração do Swagger
 
